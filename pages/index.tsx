@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
-import { getDatabase, onValue, ref, query } from "@firebase/database";
-import styles from "../styles/Home.module.css";
+import { getDatabase, onValue, ref } from "@firebase/database";
 import { useEffect, useState } from "react";
 import writeData from "../src/firebase/writeData";
 import initFirebase from "../src/firebase";
@@ -19,18 +18,18 @@ const Home: NextPage = () => {
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
       setTextData(
-        Object.entries(data).map(([key, value]: [key: string, value: any]) => ({
-          key,
-          text: value?.text,
-        }))
+        Object.entries(data || {}).map(
+          ([key, value]: [key: string, value: any]) => ({
+            key,
+            text: value?.text,
+          })
+        )
       );
     });
   };
 
-  console.log("textData", textData);
-
   return (
-    <div className={styles.container}>
+    <div className={""}>
       <form action="">
         <div style={{ display: "flex", flexDirection: "column", width: "50%" }}>
           <label htmlFor="">Type something...</label>
